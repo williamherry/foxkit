@@ -1,2 +1,2 @@
-require 'foxkit'
-require 'rspec'
+require "foxkit"
+require "rspec"

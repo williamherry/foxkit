@@ -3,7 +3,6 @@ require 'foxkit/default'
 
 # Ruby toolkit for the GitLab API
 module Foxkit
-
   class << self
     include Foxkit::Configurable
 
@@ -11,8 +10,11 @@ module Foxkit
     #
     # @return [Foxkit::Client] API wrapper
     def client
-      @client = Foxkit::Client.new(options) unless defined?(@client) && @client.same_options?(options)
-      @client
+      if defined?(@client) && @client.same_options?(options)
+        @client
+      else
+        Foxkit::Client.new(options)
+      end
     end
   end
 end

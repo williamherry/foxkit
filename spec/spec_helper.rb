@@ -1,0 +1,2 @@
+require 'foxkit'
+require 'rspec'

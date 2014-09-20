@@ -1,4 +1,5 @@
 require 'foxkit/client'
+require 'foxkit/default'
 
 # Ruby toolkit for the GitLab API
 module Foxkit
@@ -15,3 +16,5 @@ module Foxkit
     end
   end
 end
+
+Foxkit.setup

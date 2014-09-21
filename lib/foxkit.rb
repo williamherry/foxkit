@@ -13,7 +13,7 @@ module Foxkit
       if defined?(@client) && @client.same_options?(options)
         @client
       else
-        Foxkit::Client.new(options)
+        @client = Foxkit::Client.new(options)
       end
     end
   end

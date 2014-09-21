@@ -6,8 +6,14 @@ module Foxkit
   # Default configuration options for [Client}
   module Default
 
+    # Default API endpoint
+    API_ENDPOINT = "http://api.gitlab.com".freeze
+
     # Default User Agent header string
     USER_AGENT = "Foxkit Ruby Gem #{Foxkit::VERSION}".freeze
+
+    # Default media type
+    MEDIA_TYPE   = "application/json"
 
     # In Faraday 0.9, Faraday::Builder was renamed to Faraday::RackBuilder
     RACK_BUILDER_CLASS = defined?(Faraday::RackBuilder) ? Faraday::RackBuilder : Faraday::Builder
@@ -28,7 +34,7 @@ module Foxkit
       # Default API endpoint from ENV
       # @return [String]
       def api_endpoint
-        ENV['FOXKIT_API_ENDPOINT']
+        ENV['FOXKIT_API_ENDPOINT'] || API_ENDPOINT
       end
 
       # Default pagination preference from ENV
@@ -45,6 +51,12 @@ module Foxkit
             :user_agent => user_agent
           }
         }
+      end
+
+      # Default media type from ENV or {MEDIA_TYPE}
+      # @return [String]
+      def default_media_type
+        ENV['FOXKIT_DEFAULT_MEDIA_TYPE'] || MEDIA_TYPE
       end
 
       # Default User-Agent header string from ENV or {USER_AGENT}

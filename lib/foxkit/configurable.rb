@@ -6,6 +6,8 @@ module Foxkit
     #   @return [String] Base URL for API requests.
     # @!attribute auto_paginate
     #   @return [Boolean] Auto fetch next page of results until rate limit reached
+    # @!attribute default_media_type
+    #   @return [String] Configure preferred media type (for API versioning, for example)
     # @!attribute connection_options
     #   @see https://github.cim/lostisland/faraday
     #   @return [Hash] Configure connection options for Faraday
@@ -29,7 +31,8 @@ module Foxkit
     #   @return [String] Configure User-Agent header for requests.
 
     attr_accessor :auto_paginate, :connection_options, :middleware,
-                  :netrc, :netrc_file, :per_page, :proxy, :user_agent
+                  :netrc, :netrc_file, :per_page, :proxy,
+                  :user_agent, :default_media_type
     attr_writer :password, :api_endpoint, :login
 
     class << self
@@ -48,7 +51,8 @@ module Foxkit
           :per_page,
           :password,
           :proxy,
-          :user_agent
+          :user_agent,
+          :default_media_type
         ]
       end
     end
@@ -73,7 +77,7 @@ module Foxkit
 
     def login
       @login ||= begin
-                   user.login if token_authenticated?
+                   user.login if authenticated?
                  end
     end
 

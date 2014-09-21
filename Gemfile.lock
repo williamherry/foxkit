@@ -1,10 +1,21 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    addressable (2.3.6)
+    coderay (1.1.0)
+    crack (0.4.2)
+      safe_yaml (~> 1.0.0)
     diff-lcs (1.2.5)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
+    method_source (0.8.2)
+    multi_json (1.10.1)
     multipart-post (2.0.0)
+    netrc (0.7.7)
+    pry (0.10.1)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
     rspec (3.1.0)
       rspec-core (~> 3.1.0)
       rspec-expectations (~> 3.1.0)
@@ -17,10 +28,26 @@ GEM
     rspec-mocks (3.1.1)
       rspec-support (~> 3.1.0)
     rspec-support (3.1.0)
+    safe_yaml (1.0.3)
+    sawyer (0.5.5)
+      addressable (~> 2.3.5)
+      faraday (~> 0.8, < 0.10)
+    slop (3.6.0)
+    vcr (2.9.3)
+    webmock (1.18.0)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  addressable
   faraday
+  multi_json
+  netrc
+  pry
   rspec
+  sawyer
+  vcr
+  webmock

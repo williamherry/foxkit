@@ -2,6 +2,14 @@ require "spec_helper"
 
 describe Foxkit do
 
+  before do
+    Foxkit.reset!
+  end
+
+  after do
+    Foxkit.reset!
+  end
+
   it "sets defaults" do
     Foxkit::Configurable.keys.each do |key|
       expect(Foxkit.instance_variable_get(:"@#{key}")).to eq(Foxkit::Default.send(key))

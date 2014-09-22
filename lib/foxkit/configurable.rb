@@ -31,10 +31,11 @@ module Foxkit
     #   @return [String] Configure User-Agent header for requests.
     # @!attribute web_endpoint
     #   @return [String] Base URL for web URLs. default: https://gitlab.com/
+    # @!attribute api_version
 
     attr_accessor :auto_paginate, :connection_options, :middleware,
                   :netrc, :netrc_file, :per_page, :proxy,
-                  :user_agent, :default_media_type
+                  :user_agent, :default_media_type, :api_version
     attr_writer :password, :web_endpoint, :api_endpoint, :login, :private_token
 
     class << self
@@ -56,7 +57,8 @@ module Foxkit
           :password,
           :proxy,
           :user_agent,
-          :default_media_type
+          :default_media_type,
+          :api_version
         ]
       end
     end

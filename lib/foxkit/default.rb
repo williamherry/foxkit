@@ -7,6 +7,9 @@ module Foxkit
   # Default configuration options for [Client}
   module Default
 
+    # API Version string
+    API_VERSION = "api/v3"
+
     # Default API endpoint
     API_ENDPOINT = "https://gitlab.com".freeze
 
@@ -83,7 +86,6 @@ module Foxkit
         MIDDLEWARE
       end
 
-
       # Default GitLab Provate Token for Token Auth from ENV
       # @return [String]
       def private_token
@@ -126,6 +128,10 @@ module Foxkit
       # @return [String]
       def netrc_file
         ENV['FOXKIT_NETRC_FILE'] || File.join(ENV['HOME'].to_s, '.netrc')
+      end
+
+      def api_version
+        ENV['FOXKIT_API_VERSION'] || API_VERSION
       end
 
     end

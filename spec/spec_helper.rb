@@ -40,3 +40,7 @@ end
 def stub_put(url)
   stub_request(:put, gitlab_url(url))
 end
+
+def token_auth_client
+  Foxkit::Client.new(:private_token => "6FpzmcU5A1FXgTWMXyMA")
+end

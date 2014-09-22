@@ -29,11 +29,13 @@ module Foxkit
     #   @return [String] URI for proxy server
     # @!attribute user_agent
     #   @return [String] Configure User-Agent header for requests.
+    # @!attribute web_endpoint
+    #   @return [String] Base URL for web URLs. default: https://gitlab.com/
 
     attr_accessor :auto_paginate, :connection_options, :middleware,
                   :netrc, :netrc_file, :per_page, :proxy,
                   :user_agent, :default_media_type
-    attr_writer :password, :api_endpoint, :login
+    attr_writer :password, :web_endpoint, :api_endpoint, :login, :private_token
 
     class << self
 
@@ -42,8 +44,10 @@ module Foxkit
       def keys
         @keys ||= [
           :api_endpoint,
+          :web_endpoint,
           :auto_paginate,
           :connection_options,
+          :private_token,
           :login,
           :middleware,
           :netrc,
@@ -73,6 +77,10 @@ module Foxkit
 
     def api_endpoint
       File.join(@api_endpoint, "")
+    end
+
+    def web_endpoint
+      File.join(@web_endpoint, "")
     end
 
     def login

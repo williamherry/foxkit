@@ -5,7 +5,7 @@ module Foxkit
   # Authentication methods from {Foxkit::Client}
   module Authentication
 
-    # Indicates if the client was supplied  Basic Auth
+    # Indicates if the client was supplied Basic Auth
     # username and password
     #
     # @return [Boolean]
@@ -13,8 +13,16 @@ module Foxkit
       !!(@login && @password)
     end
 
+    # Indicates if the client was supplied Private Token Auth
+    # private_token
+    #
+    # @return [Boolean]
+    def token_authenticated?
+      @private_token
+    end
+
     def authenticated?
-      basic_authenticated?
+      token_authenticated? || basic_authenticated?
     end
 
     private
@@ -27,13 +35,13 @@ module Foxkit
       creds = info[netrc_host]
       if creds.nil?
         # creds will be nil if there is no netrc for this end point
-        octokit_warn "Error loading credentials from netrc file for #{api_endpoint}"
+        foxkit_warn "Error loading credentials from netrc file for #{api_endpoint}"
       else
         self.login = creds.shift
         self.password = creds.shift
       end
     rescue LoadError
-      octokit_warn "Please install netrc gem for .netrc support"
+      foxkit_warn "Please install netrc gem for .netrc support"
     end
 
   end

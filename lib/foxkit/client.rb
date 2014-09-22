@@ -1,6 +1,7 @@
 require 'sawyer'
 require 'foxkit/configurable'
 require 'foxkit/authentication'
+require 'foxkit/repository'
 
 module Foxkit
 
@@ -113,7 +114,7 @@ module Foxkit
       data = request(:get, url, opts)
 
       if @auto_paginate
-        while @last_response.rels[:next] && rate_limit.remaining > 0
+        while @last_response.rels[:next]
           @last_response = @last_response.rels[:next].get
           if block_given?
             yield(data, @last_response)
@@ -136,7 +137,11 @@ module Foxkit
         http.headers[:content_type] = "application/json"
         http.headers[:user_agent] = user_agent
 
-        http.basic_auth(@login, @password) if basic_authenticated?
+        if token_authenticated?
+          http.headers[:private_token] = @private_token
+        elsif basic_authenticated?
+          http.basic_auth(@login, @password)
+        end
       end
     end
 
@@ -145,6 +150,15 @@ module Foxkit
     # @return [Sawyer::Response]
     def last_response
       @last_response if defined? @last_response
+    end
+
+
+    # Wrapper around Kernel#warn to print warnings unless
+    # FOXKIT_SILENT is set to true.
+    #
+    # @return [nil]
+    def foxkit_warn(*message)
+      warn message unless ENV['FOXKIT_SILENT']
     end
 
     private

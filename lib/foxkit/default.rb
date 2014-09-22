@@ -1,4 +1,5 @@
 require 'faraday'
+require 'foxkit/response/raise_error'
 require 'foxkit/version'
 
 module Foxkit
@@ -7,7 +8,10 @@ module Foxkit
   module Default
 
     # Default API endpoint
-    API_ENDPOINT = "http://api.gitlab.com".freeze
+    API_ENDPOINT = "https://gitlab.com".freeze
+
+    # Default WEB endpoint
+    WEB_ENDPOINT = "https://gitlab.com".freeze
 
     # Default User Agent header string
     USER_AGENT = "Foxkit Ruby Gem #{Foxkit::VERSION}".freeze
@@ -20,6 +24,7 @@ module Foxkit
 
     # Default Faraday middleware stack
     MIDDLEWARE = RACK_BUILDER_CLASS.new do |builder|
+      builder.use Foxkit::Response::RaiseError
       builder.adapter Faraday.default_adapter
     end
 
@@ -35,6 +40,12 @@ module Foxkit
       # @return [String]
       def api_endpoint
         ENV['FOXKIT_API_ENDPOINT'] || API_ENDPOINT
+      end
+
+      # Default web endpoint from ENV or {WEB_ENDPOINT}
+      # @return [String]
+      def web_endpoint
+        ENV['FOXKIT_WEB_ENDPOINT'] || WEB_ENDPOINT
       end
 
       # Default pagination preference from ENV
@@ -70,6 +81,13 @@ module Foxkit
       # @return [String]
       def middleware
         MIDDLEWARE
+      end
+
+
+      # Default GitLab Provate Token for Token Auth from ENV
+      # @return [String]
+      def private_token
+        ENV['FOXKIT_PRIVATE_TOKEN']
       end
 
       # Default GitLab username for Basic Auth from ENV

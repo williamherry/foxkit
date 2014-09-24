@@ -178,6 +178,16 @@ module Foxkit
       response.data
     end
 
+    # Executes the request, checking if it was successful
+    #
+    # @return [Boolean] True on success, false otherwise
+    def boolean_from_response(method, path, options = {})
+      request(method, path, options)
+      @last_response.status == 204
+    rescue Foxkit::NotFound
+      false
+    end
+
     def sawyer_options
       opts = {
         :links_parser => Sawyer::LinkParsers::Simple.new

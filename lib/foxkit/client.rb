@@ -2,7 +2,9 @@ require 'sawyer'
 require 'foxkit/configurable'
 require 'foxkit/authentication'
 require 'foxkit/project'
+require 'foxkit/user'
 require 'foxkit/client/projects'
+require 'foxkit/client/users'
 
 module Foxkit
 
@@ -13,6 +15,7 @@ module Foxkit
     include Foxkit::Authentication
     include Foxkit::Configurable
     include Foxkit::Client::Projects
+    include Foxkit::Client::Users
 
     # Header keys that can be passed in options hash to {#get}, {#head}
     CONVENIENCE_HEADERS = Set.new([:accept, :content_type])

@@ -11,10 +11,16 @@ end
 def gitlab_url(url)
   return url if url =~ /^http/
 
+  url = gitlab_path(url)
   url = File.join(Foxkit.api_endpoint, url)
   uri = Addressable::URI.parse(url)
 
   uri.to_s
+end
+
+def gitlab_path(path)
+  return path if path.include?('api')
+  'api/' + Foxkit.api_version + path
 end
 
 def stub_delete(url)

@@ -30,14 +30,14 @@ describe Foxkit::Project do
     context "with project id" do
       it "returns theu url path" do
         project = Foxkit::Project.new(12345)
-        expect(project.path).to eq Foxkit.api_version + '/projects/12345'
+        expect(project.path).to eq gitlab_path('/projects/12345')
       end
     end
   end # .path
 
   describe "self.path" do
     it "returns the api path" do
-      expect(Foxkit::Project.path(12345)).to eq Foxkit.api_version + '/projects/12345'
+      expect(Foxkit::Project.path(12345)).to eq gitlab_path('/projects/12345')
     end
   end
 

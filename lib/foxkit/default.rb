@@ -8,7 +8,7 @@ module Foxkit
   module Default
 
     # API Version string
-    API_VERSION = "api/v3"
+    API_VERSION = "v3"
 
     # Default API endpoint
     API_ENDPOINT = "https://gitlab.com".freeze

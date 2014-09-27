@@ -133,8 +133,8 @@ describe Foxkit::Client do
           config.password = "il0veruby"
         end
 
-        root_request = stub_get("https://william:il0veruby@gitlab.com/")
-        Foxkit.client.get("/")
+        root_request = stub_get("https://william:il0veruby@gitlab.com/api/v3/projects")
+        Foxkit.client.get("/projects")
         assert_requested root_request
       end
     end
@@ -161,8 +161,8 @@ describe Foxkit::Client do
     end
     it "handles query params" do
       Foxkit.private_token = "6FpzmcU5A1FXgTWMXyMA"
-      Foxkit.get "/api/v3/projects", :foo => "bar"
-      assert_requested :get, "https://gitlab.com/api/v3/projects?foo=bar"
+      Foxkit.get "/projects", :foo => "bar"
+      assert_requested :get, "#{gitlab_url('/projects?foo=bar')}"
     end
     it "handles headers" do
       request = stub_get("/zen").
@@ -176,8 +176,8 @@ describe Foxkit::Client do
     it "handles query params" do
       Foxkit.reset!
       Foxkit.private_token = "6FpzmcU5A1FXgTWMXyMA"
-      Foxkit.head "/api/v3/projects", :foo => "bar"
-      assert_requested :head, "https://gitlab.com/api/v3/projects?foo=bar"
+      Foxkit.head "/projects", :foo => "bar"
+      assert_requested :head, "#{gitlab_url('/projects?foo=bar')}"
     end
     it "handles headers" do
       Foxkit.reset!
@@ -260,7 +260,7 @@ describe Foxkit::Client do
     end
 
     it "fetches all the pages" do
-      url = '/api/v3/projects?per_page=1'
+      url = '/projects?per_page=1'
       Foxkit.client.paginate url
       assert_requested :get, gitlab_url(url)
       (2..3).each do |i|
@@ -269,7 +269,7 @@ describe Foxkit::Client do
     end
 
     it "accepts a block for custom result concatination" do
-      results = Foxkit.client.paginate("/api/v3/projects",
+      results = Foxkit.client.paginate("/projects",
         :per_page => 1) { |data, last_response|
         data.concat last_response.data
       }
@@ -309,7 +309,7 @@ describe Foxkit::Client do
       begin
         Foxkit.get('/boom')
       rescue Foxkit::UnprocessableEntity => e
-        expect(e.message).to include("GET https://gitlab.com/boom: 422 - No repository found")
+        expect(e.message).to include("GET #{gitlab_url("/boom")}: 422 - No repository found")
       end
     end
 
@@ -324,7 +324,7 @@ describe Foxkit::Client do
       begin
         Foxkit.get('/boom')
       rescue Foxkit::UnprocessableEntity => e
-        expect(e.message).to include("GET https://gitlab.com/boom: 422 - Error: No repository found")
+        expect(e.message).to include("GET #{gitlab_url("/boom")}: 422 - Error: No repository found")
       end
     end
 
@@ -346,7 +346,7 @@ describe Foxkit::Client do
       begin
         Foxkit.get('/boom')
       rescue Foxkit::UnprocessableEntity => e
-        expect(e.message).to include("GET https://gitlab.com/boom: 422 - Validation Failed")
+        expect(e.message).to include("GET #{gitlab_url("/boom")}: 422 - Validation Failed")
         expect(e.message).to include("  resource: Issue")
         expect(e.message).to include("  field: title")
         expect(e.message).to include("  code: missing_field")

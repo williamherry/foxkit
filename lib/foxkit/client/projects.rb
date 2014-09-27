@@ -21,21 +21,21 @@ module Foxkit
       # @param archived [Boolean] If passed, limit by archived status
       # @return [Array<Sawyer::Resource>] List of projects
       def projects(options = {})
-        paginate "api/v3/projects", options
+        paginate "/projects", options
       end
 
       # Get projects owned by user
       #
       # @return [Array<Sawyer::Resource>] List of projects
       def owned_projects(options = {})
-        paginate "api/v3/projects/owned", options
+        paginate "/projects/owned", options
       end
 
       # Get all projects (admin only)
       #
       # @return [Array<Sawyer::Resource>] List of projects
       def all_projects(options = {})
-        paginate "api/v3/projects/all", options
+        paginate "/projects/all", options
       end
 
       # Get a single project
@@ -70,7 +70,7 @@ module Foxkit
       # @return [Sawyer::Resource] Project info for the new project
       # @see https://github.com/gitlabhq/gitlabhq/blob/master/doc/api/projects.md
       def create_project(name, options = {})
-        post 'api/v3/projects', options.merge(name: name)
+        post '/projects', options.merge(name: name)
       end
 
       # Creates a new project owned by the specified user. Available only for admins.
@@ -90,7 +90,7 @@ module Foxkit
       # @return [Sawyer::Resource] Project info for the new project
       # @see https://github.com/gitlabhq/gitlabhq/blob/master/doc/api/projects.md
       def create_user_project(name, user_id, options = {})
-        post 'api/v3/projects/user/#{user_id}', options.merge(name: name, user_id: user_id)
+        post '/projects/user/#{user_id}', options.merge(name: name, user_id: user_id)
       end
 
 
@@ -250,7 +250,7 @@ module Foxkit
       # @param page [Integer] The page to retrieve
       # @param per_page [Integer] Number of projects to return per page
       def search_project(query, options = {})
-        paginate "api/v3/projects/search/#{query}", options
+        paginate "/projects/search/#{query}", options
       end
     end
   end

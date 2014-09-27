@@ -166,6 +166,8 @@ module Foxkit
     private
 
     def request(method, path, data, options = {})
+      path = 'api/' + Foxkit.api_version + path unless path.include?('api')
+
       if data.is_a?(Hash)
         options[:query]   = data.delete(:query) || {}
         options[:headers] = data.delete(:headers) || {}

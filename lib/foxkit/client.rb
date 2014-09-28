@@ -5,6 +5,8 @@ require 'foxkit/project'
 require 'foxkit/user'
 require 'foxkit/client/projects'
 require 'foxkit/client/users'
+require 'foxkit/client/sessions'
+require 'foxkit/client/project_snippets'
 
 module Foxkit
 
@@ -16,6 +18,8 @@ module Foxkit
     include Foxkit::Configurable
     include Foxkit::Client::Projects
     include Foxkit::Client::Users
+    include Foxkit::Client::Sessions
+    include Foxkit::Client::ProjectSnippets
 
     # Header keys that can be passed in options hash to {#get}, {#head}
     CONVENIENCE_HEADERS = Set.new([:accept, :content_type])
